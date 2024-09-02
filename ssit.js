@@ -1,37 +1,51 @@
-window.onload = (event) => {
-    console.log("page is fully loaded");
-    // Set the radio button to joint
-    document.getElementById("ss-benefits").onchange = (e) => {
-        calculateTax(true);
-    };
-    document.getElementById("other-income").onchange = (e) => {
-        calculateTax(true);
-    };
-
-    const isJoint = document.getElementById("jointly").checked;
-    console.log({ isJoint });
-
-    const isSingle = document.getElementById("single").checked;
-    console.log({ isSingle });
-    document.getElementById("jointly").onclick = (e) => {
-        calculateTax(true);
-    };
-    document.getElementById("single").onclick = (e) => {
-        calculateTax(false);
-    };
-
-    calculateTax(true);
-};
+/***
+ * Social Security Income Tax
+ *
+ * Estimate your 2023 1040 income tax on social security benefits and
+ * taxable income.
+ *
+ *
+ */
 
 /***
- * Get a numeric value from an input box
- * @param {*} ele
+ * Set up listeners for text and check boxes
+ * Update the tax and worksheet output fields.
+ *
+ * todo: add listeners for the new income boxes.
+ * bug: Ensure that the input, isJoint is done right.
+ *
  */
+window.onload = (event) => {
+    // Set the radio button to joint
+    document.getElementById("ss-benefits").onchange = (e) => {
+        calculateTax();
+    };
+    document.getElementById("other-income").onchange = (e) => {
+        calculateTax();
+    };
+
+    document.getElementById("jointly").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("single").onclick = (e) => {
+        calculateTax();
+    };
+
+    calculateTax();
+};
 
 // ----------------
 // Get a numeric value from an input box
 // input: ele
 //
+/**
+ * Extract a numeric value from the element
+ * A side effect of this routine is show the value 0 as blank
+ *
+ * @param {*} ele
+ * @returns numeric value
+ *
+ */
 function numberFromElement(ele) {
     console.log(ele);
     const valueAsNumber = ele.valueAsNumber;
@@ -45,6 +59,11 @@ function numberFromElement(ele) {
     return result;
 }
 
+/**
+ * Puts numeric value into ele
+ * @param {*} ele
+ * @param {*} value
+ */
 function numberToElement(ele, value) {
     if (value == 0) {
         ele.innerHTML = "";
@@ -52,13 +71,17 @@ function numberToElement(ele, value) {
         ele.innerHTML = value;
     }
 }
-// ----------------
-// Go line by line through worksheet one:
-// https://www.irs.gov/publications/p915#en_US_2023_publink1000293181
-//
+/**
+ *
+ * @param {*} isJoint
+ * Go line by line through worksheet one:
+ *  https://www.irs.gov/publications/p915#en_US_2023_publink1000293181
+ *
+ */
+function calculateTax() {
+    const isJoint = document.getElementById("jointly").checked;
+    console.log({ isJoint });
 
-function calculateTax(isJoint) {
-    console.log({ isJointly: isJoint });
     // ----------
     // Line 1
     // Enter the total amount from SSA-1099 === 1040 line 5a
@@ -132,7 +155,8 @@ function calculateTax(isJoint) {
                 adjustedBaseAmount
             );
             // ------------------
-            let l13 = Math.min(adjustedBaseAmount, baseAmountThreshhold);
+            // line 13 = min line 10 line 11
+            let l13 = Math.min(adjustedCombinedAmount, baseAmountThreshhold);
             numberToElement(document.getElementById("l13"), l13);
 
             // -----------------
@@ -243,8 +267,10 @@ function calculateTax(isJoint) {
     //standardDeduction += isJoint ? over65Count * 1500 : over65Count * 1850;
 }
 
-// ---------------------
-//
+/**
+ *
+ * @returns
+ */
 function getOtherIncome() {
     console.log("getOtherIncome");
     const wages = numberFromElement(document.getElementById("wages"));
@@ -286,7 +312,6 @@ function computeStandardDeduction(isJoint) {
  * https://www.irs.gov/pub/irs-drop/rp-23-34.pdf
  *
  */
-
 const IncomeBracketJoint = [
     0,
     23200,
