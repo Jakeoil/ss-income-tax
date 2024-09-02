@@ -1,0 +1,48 @@
+header {
+    color: black;
+    padding: 1rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.tax-form {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+.tax-form th,
+.tax-form td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.tax-form th {
+    background-color: #f2f2f2;
+}
+.tax-form input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}
+.tax-form input[type="number"] {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}
+.line-number {
+    width: 50px;
+    text-align: center;
+}
+#not-input {
+    width: 100%;
+    padding: 6px;
+    background-color: #bbb;
+    box-sizing: border-box;
+}
+#computed {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+}

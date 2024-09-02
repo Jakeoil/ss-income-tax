@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="map-icon.png" />
+        <link rel="stylesheet" href="ssit.css" />
+        <title>Tax Form Snippet</title>
+        <style></style>
+        <script></script>
+    </head>
+    <body>
+        <header>
+            <h2>Taxable Social Security Benefits</h2>
+            <h3>Basic return with standard deduction</h3>
+        </header>
+        <table class="tax-form">
+            <tr>
+                <th>Line</th>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td class="line-number"></td>
+                <td>Filing Type</td>
+                <td>
+                    <span class="filing-status">
+                        <input
+                            type="radio"
+                            id="jointly"
+                            name="filing-status"
+                            value="jointly"
+                            checked
+                        />Jointly
+                        <input
+                            type="radio"
+                            id="single"
+                            name="filing-status"
+                            value="single"
+                        />Single
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">1</td>
+                <td>Social Security Benefits: From 1040 6a</td>
+                <td>
+                    <input id="ss-benefits" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">2</td>
+                <td>Half your benefit (from line 1)</td>
+                <td class="not-input" id="half-ss" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">3</td>
+                <td>Taxable Income: From 1040 1z, 2b, 3b, 4b, 5b, 7, and 8</td>
+                <td class="not-input" id="other-income" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">6</td>
+                <td>Combined amount: Lines 2 and 3 [4, 5]</td>
+                <td class="not-input" id="combined-amount" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">9</td>
+                <td>Combined amount threshhold</td>
+                <td
+                    class="not-input"
+                    id="combined-amount-threshhold"
+                    type="number"
+                ></td>
+            </tr>
+            <tr>
+                <td class="line-number">10</td>
+                <td>Adjusted combined amount</td>
+                <td
+                    class="not-input"
+                    id="adjusted-combined-amount"
+                    type="number"
+                ></td>
+            </tr>
+            <tr>
+                <td class="line-number">11</td>
+                <td>Base amount threshhold</td>
+                <td
+                    class="not-input"
+                    id="base-amount-threshhold"
+                    type="number"
+                ></td>
+            </tr>
+            <tr>
+                <td class="line-number">12</td>
+                <td>Adjusted base amount</td>
+                <td
+                    class="not-input"
+                    id="adjusted-base-amount"
+                    type="number"
+                ></td>
+            </tr>
+            <tr>
+                <td class="line-number">13</td>
+                <td>smaller of line 11 and 12</td>
+                <td class="not-input" id="l13" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">14</td>
+                <td>Half of line 13</td>
+                <td class="not-input" id="l14" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">15</td>
+                <td>smaller of above and half your benefit</td>
+                <td class="not-input" id="l15" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">16</td>
+                <td>85% of adjusted base amount</td>
+                <td class="not-input" id="l16" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">17</td>
+                <td>Add the two lines above</td>
+                <td class="not-input" id="l17" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">18</td>
+                <td>85% of your benefit</td>
+                <td class="not-input" id="l18" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">19</td>
+                <td>Taxable Amount: Smaller of two lines above. 1040 line6b</td>
+                <td class="not-input" id="taxable-amount" type="number"></td>
+            </tr>
+        </table>
+        <h3>1040</h3>
+        <table class="tax-form">
+            <tr>
+                <th>Line</th>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td class="line-number">1z</td>
+                <td>Wages: lines 1a through 1h</td>
+                <td>
+                    <input id="wages" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">2b</td>
+                <td>Interest</td>
+                <td>
+                    <input id="interest" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">3b</td>
+                <td>Dividends</td>
+                <td>
+                    <input id="dividends" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">4b</td>
+                <td>IRA distribution</td>
+                <td>
+                    <input id="ira-dist" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">5b</td>
+                <td>Pension</td>
+                <td>
+                    <input id="pension" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">6b</td>
+                <td>Taxable benefits: From line 19</td>
+                <td class="not-input" id="taxable-benefits" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">11</td>
+                <td>Adjusted Gross Income: Line 3 + line 19</td>
+                <td class="not-input" id="adj-gross-income" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">12</td>
+                <td>
+                    Standard deduction
+                    <span class="filing-status">
+                        <input type="checkbox" id="senior" />
+                        <input type="checkbox" id="spouse-senior" />
+                        <input type="checkbox" id="blind" />
+                        <input type="checkbox" id="spouse-blind" />
+                    </span>
+                </td>
+                <td
+                    class="not-input"
+                    id="standard-deduction"
+                    type="number"
+                ></td>
+            </tr>
+            <tr>
+                <td class="line-number">15</td>
+                <td>Taxable Income</td>
+                <td class="not-input" id="taxable-income" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">16</td>
+                <td>Tax</td>
+                <td class="not-input" id="tax" type="number"></td>
+            </tr>
+        </table>
+
+        <script src="ssit.js"></script>
+    </body>
+</html>
