@@ -14,6 +14,7 @@
             <h2>Taxable Social Security Benefits</h2>
             <h3>Basic return with standard deduction</h3>
         </header>
+        <h3 class="form-header">1040 Income</h3>
         <table class="tax-form">
             <tr>
                 <th>Line</th>
@@ -22,6 +23,7 @@
             </tr>
             <tr>
                 <td class="line-number"></td>
+
                 <td>Filing Type</td>
                 <td>
                     <span class="filing-status">
@@ -40,6 +42,49 @@
                         />Single
                     </span>
                 </td>
+            </tr>
+            <tr>
+                <td class="line-number">1z</td>
+                <td>Wages: lines 1a through 1h</td>
+                <td>
+                    <input id="wages" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">2b</td>
+                <td>Interest</td>
+                <td>
+                    <input id="interest" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">3b</td>
+                <td>Dividends</td>
+                <td>
+                    <input id="dividends" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">4b</td>
+                <td>IRA distribution</td>
+                <td>
+                    <input id="ira-dist" type="number" />
+                </td>
+            </tr>
+            <tr>
+                <td class="line-number">5b</td>
+                <td>Pension</td>
+                <td>
+                    <input id="pension" type="number" />
+                </td>
+            </tr>
+        </table>
+        <h3 class="form-header">Worksheet</h3>
+        <table class="tax-form">
+            <tr>
+                <th>Line</th>
+                <th>Description</th>
+                <th>Amount</th>
             </tr>
             <tr>
                 <td class="line-number">1</td>
@@ -135,48 +180,8 @@
                 <td class="not-input" id="taxable-amount" type="number"></td>
             </tr>
         </table>
-        <h3>1040</h3>
+        <h3 class="form-header">1040 Taxes</h3>
         <table class="tax-form">
-            <tr>
-                <th>Line</th>
-                <th>Description</th>
-                <th>Amount</th>
-            </tr>
-            <tr>
-                <td class="line-number">1z</td>
-                <td>Wages: lines 1a through 1h</td>
-                <td>
-                    <input id="wages" type="number" />
-                </td>
-            </tr>
-            <tr>
-                <td class="line-number">2b</td>
-                <td>Interest</td>
-                <td>
-                    <input id="interest" type="number" />
-                </td>
-            </tr>
-            <tr>
-                <td class="line-number">3b</td>
-                <td>Dividends</td>
-                <td>
-                    <input id="dividends" type="number" />
-                </td>
-            </tr>
-            <tr>
-                <td class="line-number">4b</td>
-                <td>IRA distribution</td>
-                <td>
-                    <input id="ira-dist" type="number" />
-                </td>
-            </tr>
-            <tr>
-                <td class="line-number">5b</td>
-                <td>Pension</td>
-                <td>
-                    <input id="pension" type="number" />
-                </td>
-            </tr>
             <tr>
                 <td class="line-number">6b</td>
                 <td>Taxable benefits: From line 19</td>

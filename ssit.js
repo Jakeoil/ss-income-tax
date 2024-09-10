@@ -30,6 +30,33 @@ window.onload = (event) => {
     document.getElementById("single").onclick = (e) => {
         calculateTax();
     };
+    document.getElementById("wages").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("interest").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("dividends").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("ira-dist").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("pension").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("senior").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("spouse-senior").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("blind").onclick = (e) => {
+        calculateTax();
+    };
+    document.getElementById("spouse-blind").onclick = (e) => {
+        calculateTax();
+    };
 
     calculateTax();
 };
@@ -73,7 +100,6 @@ function numberToElement(ele, value) {
 }
 /**
  *
- * @param {*} isJoint
  * Go line by line through worksheet one:
  *  https://www.irs.gov/publications/p915#en_US_2023_publink1000293181
  *
@@ -247,18 +273,24 @@ function calculateTax() {
         document.getElementById("adj-gross-income"),
         adjustedGrossIncome
     );
+    // 1040 line 12
     const standardDeduction = computeStandardDeduction(isJoint);
     console.log({ standardDeduction });
     numberToElement(
         document.getElementById("standard-deduction"),
         standardDeduction
     );
-    const finalTaxableIncome = adjustedGrossIncome - standardDeduction;
+    // 1040 line
+    const finalTaxableIncome = Math.max(
+        adjustedGrossIncome - standardDeduction,
+        0
+    );
     console.log({ finalTaxableIncome });
     numberToElement(
         document.getElementById("taxable-income"),
         finalTaxableIncome
     );
+    // 1040 line 15
     const tax = taxOnIncome(finalTaxableIncome, isJoint);
     console.log({ tax });
     numberToElement(document.getElementById("tax"), tax);
@@ -287,6 +319,16 @@ function getOtherIncome() {
     console.log({ wages });
     return taxableIncome;
 }
+const STD_SINGLE_2023 = 13850;
+const STD_SINGLE_2024 = 14600;
+const STD_JOINT_2023 = 27700;
+const STD_JOINT_2024 = 29200;
+const ADDL_STD_SINGLE_2023 = 1850;
+const ADDL_STD_SINGLE_2024 = 1900;
+const ADDL_STD_JOINT_2023 = 1500;
+const ADDL_STD_JOINT_2024 = 1500;
+const IS_2023 = true;
+
 /**
  *
  * @param {*} isJoint
@@ -302,9 +344,9 @@ function computeStandardDeduction(isJoint) {
         (document.getElementById("spouse-blind").checked ? 1 : 0);
     console.log({ boxesChecked });
     if (isJoint) {
-        return 27700 + 1500 * boxesChecked;
+        return STD_JOINT_2024 + ADDL_STD_JOINT_2024 * boxesChecked;
     } else {
-        return 13850 + 1850 * boxesChecked;
+        return STD_SINGLE_2024 + ADDL_STD_SINGLE_2024 * boxesChecked;
     }
 }
 /***

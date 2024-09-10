@@ -31,6 +31,12 @@ header {
     padding: 6px;
     box-sizing: border-box;
 }
+.form-header {
+    color: black;
+    padding: 6px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
 .line-number {
     width: 50px;
     text-align: center;
