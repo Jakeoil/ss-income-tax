@@ -1,6 +1,6 @@
 header {
     color: black;
-    padding: 1rem;
+    padding: 1px;
     text-align: center;
     font-family: Arial, sans-serif;
 }
@@ -33,7 +33,7 @@ header {
 }
 .form-header {
     color: black;
-    padding: 6px;
+    padding: 1px;
     text-align: center;
     font-family: Arial, sans-serif;
 }

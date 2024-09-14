@@ -115,6 +115,10 @@ function calculateTax() {
     console.log("ss-benefits", { ele });
     const ssBenefits = numberFromElement(ele);
     console.log("Line1", { ssBenefits });
+
+    ele = document.getElementById("ss-benefits-ws");
+    console.log("ss-benefits-ws", { ele });
+    const ssBenefits2 = numberToElement(ele, ssBenefits);
     // ----------
     // Line 2
     const halfSS = Math.round(ssBenefits / 2);
@@ -122,17 +126,21 @@ function calculateTax() {
     ele = document.getElementById("half-ss");
     numberToElement(ele, halfSS);
     // ------------
-    // Line 3 rename to taxable-income
+    // Line 3 rename
     const otherIncome = getOtherIncome();
     console.log("Results", { otherIncome });
     numberToElement(document.getElementById("other-income"), otherIncome);
     console.log({ otherIncome });
     let taxableBenefits = 0;
+    // Line 4 and 5 Exempt Income
+    const exemptIncome = 0;
+    numberToElement(document.getElementById("exempt-income"), otherIncome);
+    console.log({ exemptIncome });
     // -------------
     // line 6
     if (ssBenefits) {
         // line 6 income + half
-        const combinedAmount = halfSS + otherIncome;
+        const combinedAmount = Math.round(halfSS + otherIncome + exemptIncome);
         numberToElement(
             document.getElementById("combined-amount"),
             combinedAmount
@@ -182,30 +190,31 @@ function calculateTax() {
             );
             // ------------------
             // line 13 = min line 10 line 11
-            let l13 = Math.min(adjustedCombinedAmount, baseAmountThreshhold);
+            const l13 = Math.min(adjustedCombinedAmount, baseAmountThreshhold);
+            console.log({ l13 });
             numberToElement(document.getElementById("l13"), l13);
 
             // -----------------
             // Line 14
-            let l14 = Math.round(l13 / 2);
+            const l14 = Math.round(l13 / 2);
             numberToElement(document.getElementById("l14"), l14);
             // -----------------
             // Line 15
-            let l15 = Math.min(halfSS, l14);
+            const l15 = Math.min(halfSS, l14);
             numberToElement(document.getElementById("l15"), l15);
             // -----------------
             // Line 16
-            let l16 = Math.round(adjustedBaseAmount * 0.85);
+            const l16 = Math.round(adjustedBaseAmount * 0.85);
             numberToElement(document.getElementById("l16"), l16);
 
             // -----------------
             // Line 17
-            let l17 = l15 + l16;
+            const l17 = l15 + l16;
             numberToElement(document.getElementById("l17"), l17);
 
             // -----------------
             // Line 18
-            let l18 = Math.round(ssBenefits * 0.85);
+            const l18 = Math.round(ssBenefits * 0.85);
             numberToElement(document.getElementById("l18"), l18);
             // line 19
             taxableBenefits = Math.min(l17, l18); // Line 6b
@@ -218,12 +227,13 @@ function calculateTax() {
                 document.getElementById("adjusted-combined-amount"),
                 0
             );
+            numberToElement(document.getElementById("adjusted-base-amount"), 0);
+
             const baseAmountThreshhold = isJoint ? 12000 : 9000;
             numberToElement(
-                (document.getElementById("base-amount-threshhold"),
-                baseAmountThreshhold)
+                document.getElementById("base-amount-threshhold"),
+                baseAmountThreshhold
             );
-            numberToElement(document.getElementById("adjusted-base-amount"), 0);
 
             document.getElementById("l13").innerHTML = "";
             document.getElementById("l14").innerHTML = "";
@@ -239,12 +249,13 @@ function calculateTax() {
         }
     } else {
         numberToElement(document.getElementById("adjusted-combined-amount"), 0);
+        numberToElement(document.getElementById("adjusted-base-amount"), 0);
+
         const baseAmountThreshhold = isJoint ? 12000 : 9000;
         numberToElement(
-            (document.getElementById("base-amount-threshhold"),
-            baseAmountThreshhold)
+            document.getElementById("base-amount-threshhold"),
+            baseAmountThreshhold
         );
-        numberToElement(document.getElementById("adjusted-base-amount"), 0);
 
         document.getElementById("l13").innerHTML = "";
         document.getElementById("l14").innerHTML = "";
@@ -291,9 +302,9 @@ function calculateTax() {
         finalTaxableIncome
     );
     // 1040 line 15
-    const tax = taxOnIncome(finalTaxableIncome, isJoint);
-    console.log({ tax });
+    const { tax, tableString } = taxOnIncome(finalTaxableIncome, isJoint);
     numberToElement(document.getElementById("tax"), tax);
+    document.getElementById("tax-dscr").innerHTML = tableString;
     //let over65Count = 2;
     //let standardDeduction = isJoint ? 27700 : 13850;
     //standardDeduction += isJoint ? over65Count * 1500 : over65Count * 1850;
@@ -390,7 +401,15 @@ function taxOnIncome(income, isJoint) {
 
     for (let i = 0; i < Tax.length; i++) {
         if (income < IncomeBracket[i + 1]) {
-            return Tax[i] + (ExcessRate[i] / 100) * (income - IncomeBracket[i]);
+            const tableString = `Tax bracket $${IncomeBracket[i]}: $${
+                Tax[i]
+            } plus ${ExcessRate[i]}% of $${income - IncomeBracket[i]}`;
+            console.log(tableString);
+            const tax = Math.round(
+                Tax[i] + (ExcessRate[i] / 100) * (income - IncomeBracket[i])
+            );
+
+            return { tax, tableString };
         }
     }
 }
@@ -401,6 +420,6 @@ let list = [
 ];
 for (let i = 0; i < list.length; i++) {
     let income = list[i];
-    let tax = taxOnIncome(income, true);
+    const { tax, tableString } = taxOnIncome(income, true);
     console.log("finished:", i, income, tax);
 }

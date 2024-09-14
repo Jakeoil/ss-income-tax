@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="map-icon.png" />
         <link rel="stylesheet" href="ssit.css" />
-        <title>Tax Form Snippet</title>
+        <title>Social Security Income Tax</title>
         <style></style>
         <script></script>
     </head>
@@ -17,31 +17,43 @@
         <h3 class="form-header">1040 Income</h3>
         <table class="tax-form">
             <tr>
-                <th>Line</th>
-                <th>Description</th>
-                <th>Amount</th>
-            </tr>
-            <tr>
                 <td class="line-number"></td>
-
-                <td>Filing Type</td>
                 <td>
+                    Filing Type
                     <span class="filing-status">
                         <input
                             type="radio"
                             id="jointly"
                             name="filing-status"
-                            value="jointly"
                             checked
-                        />Jointly
+                        />Joint
                         <input
                             type="radio"
                             id="single"
                             name="filing-status"
-                            value="single"
                         />Single
                     </span>
                 </td>
+                <td>
+                    <div>
+                        <span class="filing-status">
+                            <input type="checkbox" id="senior" />self over 65
+                            <input type="checkbox" id="blind" />blind
+                        </span>
+                    </div>
+                    <div id="joint-only">
+                        <span class="filing-status">
+                            <input type="checkbox" id="spouse-senior" />spouse
+                            over 65
+                            <input type="checkbox" id="spouse-blind" />blind
+                        </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Line</th>
+                <th>Description</th>
+                <th>Amount</th>
             </tr>
             <tr>
                 <td class="line-number">1z</td>
@@ -78,6 +90,13 @@
                     <input id="pension" type="number" />
                 </td>
             </tr>
+            <tr>
+                <td class="line-number">6a</td>
+                <td>Social Security Benefits</td>
+                <td>
+                    <input id="ss-benefits" type="number" />
+                </td>
+            </tr>
         </table>
         <h3 class="form-header">Worksheet</h3>
         <table class="tax-form">
@@ -89,9 +108,7 @@
             <tr>
                 <td class="line-number">1</td>
                 <td>Social Security Benefits: From 1040 6a</td>
-                <td>
-                    <input id="ss-benefits" type="number" />
-                </td>
+                <td class="not-input" id="ss-benefits-ws" type="number"></td>
             </tr>
             <tr>
                 <td class="line-number">2</td>
@@ -102,6 +119,11 @@
                 <td class="line-number">3</td>
                 <td>Taxable Income: From 1040 1z, 2b, 3b, 4b, 5b, 7, and 8</td>
                 <td class="not-input" id="other-income" type="number"></td>
+            </tr>
+            <tr>
+                <td class="line-number">4,5</td>
+                <td>Exempt interest and Income</td>
+                <td class="not-input" id="exempt-income" type="number"></td>
             </tr>
             <tr>
                 <td class="line-number">6</td>
@@ -194,15 +216,7 @@
             </tr>
             <tr>
                 <td class="line-number">12</td>
-                <td>
-                    Standard deduction
-                    <span class="filing-status">
-                        <input type="checkbox" id="senior" />
-                        <input type="checkbox" id="spouse-senior" />
-                        <input type="checkbox" id="blind" />
-                        <input type="checkbox" id="spouse-blind" />
-                    </span>
-                </td>
+                <td>Standard deduction</td>
                 <td
                     class="not-input"
                     id="standard-deduction"
@@ -216,7 +230,7 @@
             </tr>
             <tr>
                 <td class="line-number">16</td>
-                <td>Tax</td>
+                <td id="tax-dscr">Tax</td>
                 <td class="not-input" id="tax" type="number"></td>
             </tr>
         </table>
